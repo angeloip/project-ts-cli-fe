@@ -18,7 +18,7 @@ export const Input: React.FC<Props> = ({
       <input
         type="text"
         id="floating_outlined"
-        className="input-dynamic px-3 py-2.5 w-full bg-transparent rounded-lg border-2 border-gray-500 outline-none focus:border-indigo-500 peer"
+        className="input-dynamic px-3 py-2.5 w-full bg-transparent rounded-lg border-2 border-gray-400 outline-none focus:border-indigo-500 peer"
         placeholder=" "
         name={name}
         onChange={onChange}

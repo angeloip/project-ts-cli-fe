@@ -1,5 +1,10 @@
-import { useReducer } from 'react'
-import { type Cart, type CartAction, type CartID, type CartState } from '../types'
+import { useReducer, useMemo, useEffect } from 'react'
+import {
+  type Cart,
+  type CartAction,
+  type CartID,
+  type CartState
+} from '../types'
 
 const reducer = (state: CartState, action: CartAction) => {
   const { type } = action
@@ -83,11 +88,15 @@ const reducer = (state: CartState, action: CartAction) => {
 }
 
 export const useCartStorage = () => {
-  const initialState: CartState = {
-    cart: [],
-    quantity: 0,
-    total: 0
-  }
+  const storedData = useMemo(() => {
+    return localStorage.getItem('_cart')
+  }, [])
+
+  const initialState: CartState = useMemo(() => {
+    return storedData
+      ? JSON.parse(storedData)
+      : { cart: [], quantity: 0, total: 0 }
+  }, [storedData])
 
   const [{ cart, quantity, total }, dispatch] = useReducer(
     reducer,
@@ -109,6 +118,10 @@ export const useCartStorage = () => {
   const decreaseQuantity = (payload: CartID) => {
     dispatch({ type: 'DECREASE_QUANTITY', payload })
   }
+
+  useEffect(() => {
+    localStorage.setItem('_cart', JSON.stringify({ cart, quantity, total }))
+  }, [cart])
 
   return {
     cart,
