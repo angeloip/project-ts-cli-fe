@@ -3,8 +3,8 @@ import { Modal } from './Modal'
 import { Input } from './Input'
 import { useState } from 'react'
 import { Toast } from '../helpers/toast'
-import { useApi } from '../hooks/useApi'
 import { type User } from '../interfaces/User'
+import { useApi } from '../api/useApi'
 
 interface Props {
   show: boolean

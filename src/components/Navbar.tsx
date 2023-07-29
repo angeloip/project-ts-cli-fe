@@ -1,7 +1,7 @@
 import { FaShoppingCart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CartBox } from './CartBox'
 import { Login } from './Login'
 
@@ -9,8 +9,22 @@ export const Navbar = () => {
   const { quantity } = useCart()
   const [showCart, setShowCart] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
+  const ref = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      ref.current?.classList.toggle('bg-white', window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <nav className="w-full h-[75px] shadow-md">
+    <nav ref={ref} className="fixed w-full h-[75px] shadow-md transition-[background-color]">
       <div className="h-full flex items-center justify-between px-5">
         <section>
           <h1 className="text-3xl font-bold">Project-TS</h1>

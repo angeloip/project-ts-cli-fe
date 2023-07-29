@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background: #e4e9f7;
+}
+
 .fade-in {
   animation: fade-in 0.3s forwards;
 }
@@ -104,4 +108,39 @@
 
 button:disabled {
   @apply bg-gray-400 hover:bg-gray-400 cursor-not-allowed;
+}
+
+.component-box {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 100px 0.5rem 0 0.5rem;
+}
+
+.radio-btn {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 3px solid rgb(99 102 241 / 1);
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.radio-btn:after {
+  content: '';
+  height: 9px;
+  width: 9px;
+  background: rgb(99 102 241 / 1);
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.radio-input:checked ~ .radio-btn:after {
+  transform: translate(-50%, -50%) scale(1);
 }
