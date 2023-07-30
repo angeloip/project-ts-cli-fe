@@ -10,8 +10,14 @@ export const useApi = () => {
   const getCategoriesRequest = async () =>
     await axios.get<CategoryResponse[]>('/category')
 
-  const getProductsByCategoryRequest = async (category: string) =>
-    await axios.post<ProductResponse[]>(`/product/category?name=${category}`)
+  const getProductsByCategoryRequest = async (
+    category: string,
+    key: string,
+    order: string
+  ) =>
+    await axios.post<ProductResponse[]>(
+      `/product/category?name=${category}&key=${key}&order=${order}`
+    )
 
   return { registerRequest, getCategoriesRequest, getProductsByCategoryRequest }
 }

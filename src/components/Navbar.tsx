@@ -24,7 +24,10 @@ export const Navbar = () => {
   }, [])
 
   return (
-    <nav ref={ref} className="fixed w-full h-[75px] shadow-md transition-[background-color]">
+    <nav
+      ref={ref}
+      className="fixed w-full h-[75px] shadow-md transition-[background-color] z-50"
+    >
       <div className="h-full flex items-center justify-between px-5">
         <section>
           <h1 className="text-3xl font-bold">Project-TS</h1>

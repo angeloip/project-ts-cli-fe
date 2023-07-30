@@ -3,14 +3,25 @@ import { SingleProduct } from '../components/SingleProduct.tsx'
 import { CategoryFilters } from '../components/CategoryFilters.tsx'
 import { useApi } from '../api/useApi.ts'
 import { type ProductResponse } from '../interfaces/Product'
+import { Select } from '../components/Select.tsx'
+import { orderOptions } from '../constants/constants.tsx'
 
 export const Category = () => {
   const [products, setProducts] = useState<ProductResponse[]>([])
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedOrder, setSelectedOrder] = useState({
+    value: '',
+    key: '',
+    order: ''
+  })
   const { getProductsByCategoryRequest } = useApi()
 
   const getProductsByCategory = async () => {
-    await getProductsByCategoryRequest(selectedCategory)
+    await getProductsByCategoryRequest(
+      selectedCategory,
+      selectedOrder.key,
+      selectedOrder.order
+    )
       .then((res) => {
         setProducts(res.data)
       })
@@ -20,8 +31,10 @@ export const Category = () => {
   }
 
   useEffect(() => {
-    if (selectedCategory) void getProductsByCategory()
-  }, [selectedCategory])
+    if (selectedCategory) {
+      void getProductsByCategory()
+    }
+  }, [selectedCategory, selectedOrder])
 
   return (
     <section className="component-box">
@@ -29,8 +42,27 @@ export const Category = () => {
         <CategoryFilters
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          setSelectedOrder={setSelectedOrder}
         />
         <div className="w-full">
+          <section className="bg-white rounded-lg py-3 px-5 flex items-center justify-between gap-2 mb-4 flex-wrap">
+            <div>awa</div>
+            <section className="flex items-center justify-center gap-2 w-full max-w-[350px]">
+              <span className="whitespace-nowrap">Ordenar por: </span>
+              <Select
+                options={orderOptions.map((option) => option.text)}
+                value={selectedOrder.value}
+                onChange={(option) => {
+                  const order = orderOptions.find((op) => op.text === option)
+                  setSelectedOrder({
+                    value: order?.text as string,
+                    key: order?.name as string,
+                    order: order?.order as string
+                  })
+                }}
+              />
+            </section>
+          </section>
           <section className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2.5">
             {products.map((product) => (
               <SingleProduct key={product._id} product={product} />
