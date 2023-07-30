@@ -38,17 +38,3 @@ export type CartAction =
   | { type: 'CLEAR_CART' }
   | { type: 'INCREASE_QUANTITY', payload: CartID }
   | { type: 'DECREASE_QUANTITY', payload: CartID }
-
-export interface Product {
-  id: number
-  title: string
-  description: string
-  price: number
-  discountPercentage: number
-  rating: number
-  stock: number
-  brand: string
-  category: string
-  thumbnail: string
-  images: string[]
-}

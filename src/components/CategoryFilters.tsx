@@ -3,9 +3,16 @@ import { type CategoryResponse } from '../interfaces/Category'
 import { RadioGroup } from './RadioGroup'
 import { useState, useEffect } from 'react'
 
-export const CategoryFilters = () => {
+interface Props {
+  selectedCategory: string
+  setSelectedCategory: (category: string) => void
+}
+
+export const CategoryFilters: React.FC<Props> = ({
+  selectedCategory,
+  setSelectedCategory
+}) => {
   const [categories, setCategories] = useState<CategoryResponse[]>([])
-  const [selectedCategory, setSelectedCategory] = useState('')
   const { getCategoriesRequest } = useApi()
 
   const getCategories = async () => {

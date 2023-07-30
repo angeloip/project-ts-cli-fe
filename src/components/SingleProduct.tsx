@@ -1,24 +1,31 @@
 import { FaCartPlus, FaMinus, FaPlus } from 'react-icons/fa'
 import { useCart } from '../context/CartContext'
-import { type Product } from '../types'
+import { type ProductResponse } from '../interfaces/Product'
 
 interface Props {
-  product: Product
+  product: ProductResponse
 }
 
 export const SingleProduct: React.FC<Props> = ({ product }) => {
   const { addToCart, cart, increaseQuantity, decreaseQuantity } = useCart()
-  const productExists = cart.find((item) => item.id === product.id)
+  const productExists = cart.find((item) => item.id === product._id)
 
   const handleAddToCart = () => {
-    const { id, title, price, category, description, thumbnail } = product
-    const productToAdd = {
-      id,
-      name: title,
+    const {
+      _id,
+      name,
       price,
-      category,
+      category: { name: categoryName },
       description,
-      image: thumbnail
+      thumbnail: { url }
+    } = product
+    const productToAdd = {
+      id: _id,
+      name,
+      price,
+      category: categoryName,
+      description,
+      image: url
     }
     addToCart(productToAdd)
   }
@@ -28,14 +35,14 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
       <a href="#">
         <img
           className="p-5 object-cover w-full h-[200px] mx-auto"
-          src={product.thumbnail}
-          alt={product.title}
+          src={product.thumbnail.url}
+          alt={product.name}
         />
       </a>
       <div className="px-5 pb-5 flex flex-col gap-5">
         <a href="#">
           <h5 className="text-lg font-semibold text-gray-900 dark:text-white h-[56px] line-clamp-2">
-            {product.title}
+            {product.name}
           </h5>
         </a>
         <div className="flex items-center">

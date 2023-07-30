@@ -7,5 +7,4 @@ export interface User extends Auth {
   _id?: string
   name: string
   createdAt?: Date
-  updatedAt?: Date
 }
