@@ -14,13 +14,16 @@ export const Category = () => {
     key: '',
     order: ''
   })
+  const [selectedPrice, setSelectedPrice] = useState({ min: '', max: '' })
   const { getProductsByCategoryRequest } = useApi()
 
   const getProductsByCategory = async () => {
     await getProductsByCategoryRequest(
       selectedCategory,
       selectedOrder.key,
-      selectedOrder.order
+      selectedOrder.order,
+      selectedPrice.min,
+      selectedPrice.max
     )
       .then((res) => {
         setProducts(res.data)
@@ -43,6 +46,8 @@ export const Category = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           setSelectedOrder={setSelectedOrder}
+          setSelectedPrice={setSelectedPrice}
+          getProductsByCategory={getProductsByCategory}
         />
         <div className="w-full">
           <section className="bg-white rounded-lg py-3 px-5 flex items-center justify-between gap-2 mb-4 flex-wrap">

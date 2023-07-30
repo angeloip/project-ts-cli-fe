@@ -12,12 +12,16 @@ interface Props {
     key: string
     order: string
   }) => void
+  setSelectedPrice: (price: { min: string, max: string }) => void
+  getProductsByCategory: () => void
 }
 
 export const CategoryFilters: React.FC<Props> = ({
   selectedCategory,
   setSelectedCategory,
-  setSelectedOrder
+  setSelectedOrder,
+  setSelectedPrice,
+  getProductsByCategory
 }) => {
   const [categories, setCategories] = useState<CategoryResponse[]>([])
   const { getCategoriesRequest } = useApi()
@@ -54,8 +58,16 @@ export const CategoryFilters: React.FC<Props> = ({
         <h2 className="text-lg font-medium border-b border-b-gray-300 pb-3">
           Gama de Precios
         </h2>
-        <DoubleRangeSlider />
-        <button className="button-primary w-full mt-2">Aplicar filtro</button>
+        <DoubleRangeSlider
+          min={0}
+          max={2000}
+          initialMax={2000}
+          gap={200}
+          onChange={(min, max) => {
+            setSelectedPrice({ min: min.toString(), max: max.toString() })
+          }}
+        />
+        <button className="button-primary w-full mt-2" onClick={getProductsByCategory}>Aplicar filtro</button>
       </section>
     </section>
   )

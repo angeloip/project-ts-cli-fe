@@ -31,26 +31,28 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
   }
 
   return (
-    <div className="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
-        <img
-          className="p-5 object-cover w-full h-[200px] mx-auto"
-          src={product.thumbnail.url}
-          alt={product.name}
-        />
+    <div className="w-full bg-white rounded-lg shadow">
+      <a href="">
+        <figure className='p-5 h-[200px]'>
+          <img
+            className="object-cover w-full h-full mx-auto shadow-lg"
+            src={product.thumbnail.url}
+            alt={product.name}
+          />
+        </figure>
       </a>
       <div className="px-5 pb-5 flex flex-col gap-5">
         <a href="#">
-          <h5 className="text-lg font-semibold text-gray-900 dark:text-white h-[56px] line-clamp-2">
+          <h5 className="text-lg font-semibold text-gray-900 h-[56px] line-clamp-2">
             {product.name}
           </h5>
         </a>
         <div className="flex items-center">
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+          <span className="bg-blue-200 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
             {product.rating}
           </span>
         </div>
-        <p className="text-xl font-bold text-gray-900 dark:text-white">
+        <p className="text-xl font-bold text-gray-900">
           ${product.price}
         </p>
         {productExists ? (

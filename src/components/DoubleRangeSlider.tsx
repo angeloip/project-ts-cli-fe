@@ -7,6 +7,7 @@ interface Props {
   max?: number
   gap?: number
   step?: number
+  onChange?: (min: number, max: number) => void
 }
 
 export const DoubleRangeSlider: React.FC<Props> = ({
@@ -15,7 +16,8 @@ export const DoubleRangeSlider: React.FC<Props> = ({
   min = 0,
   max = 1000,
   gap = 100,
-  step = 10
+  step = 10,
+  onChange
 }) => {
   const [sliderRange, setSliderRange] = useState({
     rangeMin: initialMin,
@@ -39,18 +41,18 @@ export const DoubleRangeSlider: React.FC<Props> = ({
     } else {
       setSliderRange({ rangeMin: minVal, rangeMax: maxVal })
     }
+
+    onChange?.(minVal, maxVal)
   }
 
   useEffect(() => {
     if (ref.current[0] && ref.current[1] && progressRef.current) {
-      progressRef.current.style.left = `${
-        (parseInt(ref.current[0].value) / parseInt(ref.current[0].max)) * 100
-      }%`
+      progressRef.current.style.left = `${(parseInt(ref.current[0].value) / parseInt(ref.current[0].max)) * 100
+        }%`
 
-      progressRef.current.style.right = `${
-        100 -
+      progressRef.current.style.right = `${100 -
         (parseInt(ref.current[1].value) / parseInt(ref.current[1].max)) * 100
-      }%`
+        }%`
     }
   }, [sliderRange])
 

@@ -13,10 +13,12 @@ export const useApi = () => {
   const getProductsByCategoryRequest = async (
     category: string,
     key: string,
-    order: string
+    order: string,
+    min: string,
+    max: string
   ) =>
     await axios.post<ProductResponse[]>(
-      `/product/category?name=${category}&key=${key}&order=${order}`
+      `/product/category?name=${category}&key=${key}&order=${order}&min=${min}&max=${max}`
     )
 
   return { registerRequest, getCategoriesRequest, getProductsByCategoryRequest }
