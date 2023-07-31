@@ -1,19 +1,3 @@
-export interface StateUser {
-  users: User[]
-}
-
-export interface User {
-  id: string
-  name: string
-  email: string
-  github: string
-}
-
-export type Action =
-  | { type: 'CREATE_USER', payload: User }
-  | { type: 'DELETE_USER', payload: string }
-  | { type: 'EDIT_USER', payload: User }
-
 export interface CartState {
   cart: Cart[]
   quantity: number

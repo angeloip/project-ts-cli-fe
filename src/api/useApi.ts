@@ -7,6 +7,13 @@ export const useApi = () => {
   const registerRequest = async (user: User) =>
     await axios.post('/auth/register', user)
 
+  const loginRequest = async (user: User) =>
+    await axios.post('/auth/login', user)
+
+  const accessTokenRequest = async () => await axios.post('/auth/access')
+
+  const logoutRequest = async () => await axios.post('/auth/logout')
+
   const getCategoriesRequest = async () =>
     await axios.get<CategoryResponse[]>('/category')
 
@@ -21,5 +28,12 @@ export const useApi = () => {
       `/product/category?name=${category}&key=${key}&order=${order}&min=${min}&max=${max}`
     )
 
-  return { registerRequest, getCategoriesRequest, getProductsByCategoryRequest }
+  return {
+    registerRequest,
+    loginRequest,
+    accessTokenRequest,
+    logoutRequest,
+    getCategoriesRequest,
+    getProductsByCategoryRequest
+  }
 }
