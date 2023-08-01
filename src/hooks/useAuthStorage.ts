@@ -1,4 +1,9 @@
-import { type User, type AuthAction, type AuthState, type Avatar } from '../interfaces/User'
+import {
+  type User,
+  type AuthAction,
+  type AuthState,
+  type Avatar
+} from '../interfaces/User'
 import { useReducer } from 'react'
 
 const reducer = (state: AuthState, action: AuthAction) => {
@@ -56,7 +61,7 @@ export const useAuthStorage = () => {
     token: ''
   }
 
-  const signIn = (payload: boolean) => {
+  const signin = (payload: boolean) => {
     dispatch({ type: 'SIGNIN', payload })
   }
 
@@ -76,7 +81,19 @@ export const useAuthStorage = () => {
     dispatch({ type: 'LOGOUT' })
   }
 
-  const [{ isLoggedIn, token, user }, dispatch] = useReducer(reducer, INITIAL_STATE)
+  const [{ isLoggedIn, token, user }, dispatch] = useReducer(
+    reducer,
+    INITIAL_STATE
+  )
 
-  return { isLoggedIn, token, user, signIn, getToken, getUser, updateAvatar, logout }
+  return {
+    user,
+    isLoggedIn,
+    token,
+    signin,
+    getToken,
+    getUser,
+    updateAvatar,
+    logout
+  }
 }

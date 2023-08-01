@@ -17,11 +17,11 @@ const CartContext = createContext<State>({
   cart: [],
   quantity: 0,
   total: 0,
-  addToCart: (_payload) => {},
-  removeFromCart: (_payload) => {},
+  addToCart: () => {},
+  removeFromCart: () => {},
   clearCart: () => {},
-  increaseQuantity: (_payload) => {},
-  decreaseQuantity: (_payload) => {}
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {}
 })
 
 export const useCart = () => {

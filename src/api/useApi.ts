@@ -12,6 +12,13 @@ export const useApi = () => {
 
   const accessTokenRequest = async () => await axios.post('/auth/access')
 
+  const getUserAuthRequest = async (token: string) =>
+    await axios.get('/auth/user', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
   const logoutRequest = async () => await axios.post('/auth/logout')
 
   const getCategoriesRequest = async () =>
@@ -31,6 +38,7 @@ export const useApi = () => {
   return {
     registerRequest,
     loginRequest,
+    getUserAuthRequest,
     accessTokenRequest,
     logoutRequest,
     getCategoriesRequest,
