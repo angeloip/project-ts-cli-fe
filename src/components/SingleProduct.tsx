@@ -1,6 +1,8 @@
 import { FaCartPlus, FaMinus, FaPlus } from 'react-icons/fa'
 import { useCart } from '../context/CartContext'
 import { type ProductResponse } from '../interfaces/Product'
+import { Link } from 'react-router-dom'
+import { slugify } from '../helpers/slugify'
 
 interface Props {
   product: ProductResponse
@@ -32,15 +34,15 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
 
   return (
     <div className="w-full bg-white rounded-lg shadow">
-      <a href="">
-        <figure className='p-5 h-[200px]'>
+      <Link to={`/detalles/${slugify(product.name)}/${product._id}`}>
+        <figure className="p-5 h-[200px]">
           <img
             className="object-cover w-full h-full mx-auto shadow-lg"
             src={product.thumbnail.url}
             alt={product.name}
           />
         </figure>
-      </a>
+      </Link>
       <div className="px-5 pb-5 flex flex-col gap-5">
         <a href="#">
           <h5 className="text-lg font-semibold text-gray-900 h-[56px] line-clamp-2">
@@ -52,13 +54,11 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
             {product.rating}
           </span>
         </div>
-        <p className="text-xl font-bold text-gray-900">
-          ${product.price}
-        </p>
+        <p className="text-xl font-bold text-gray-900">${product.price}</p>
         {productExists ? (
-          <div className="flex items-center justify-center gap-3 text-white h-10">
+          <div className="flex items-center justify-center gap-3 h-10">
             <button
-              className="bg-indigo-500 rounded-full p-1.5 hover:bg-indigo-600 transition-colors"
+              className="bg-indigo-500 rounded-full p-1.5 hover:bg-indigo-600 transition-colors text-white"
               onClick={() => {
                 decreaseQuantity(productExists.id)
               }}
@@ -68,7 +68,7 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
             </button>
             <span className="text-xl font-bold">{productExists.quantity}</span>
             <button
-              className="bg-indigo-500 rounded-full p-1.5 hover:bg-indigo-600 transition-colors"
+              className="bg-indigo-500 rounded-full p-1.5 hover:bg-indigo-600 transition-colors text-white"
               onClick={() => {
                 increaseQuantity(productExists.id)
               }}

@@ -4,6 +4,7 @@
 
 body {
   background: #e4e9f7;
+  color: #262626;
 }
 
 input[type='number']::-webkit-outer-spin-button,

@@ -4,12 +4,28 @@ import { useCart } from '../context/CartContext'
 import { useEffect, useRef, useState } from 'react'
 import { CartBox } from './CartBox'
 import { Login } from './Login'
+import { useAuth } from '../context/AuthContext'
+import { useApi } from '../api/useApi'
+import { Toast } from '../helpers/toast'
 
 export const Navbar = () => {
   const { quantity } = useCart()
   const [showCart, setShowCart] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const ref = useRef<HTMLDivElement | null>(null)
+  const { user, logout } = useAuth()
+  const { logoutRequest } = useApi()
+
+  const signout = async () => {
+    await logoutRequest()
+      .then((res) => {
+        logout()
+        Toast('success', res.data.msg)
+      })
+      .catch((err) => {
+        Toast('error', err.response.data.msg)
+      })
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,15 +59,25 @@ export const Navbar = () => {
           </ul>
         </section>
         <section className="flex gap-3">
-          <button
-            className="button-primary"
-            onClick={() => {
-              setShowLogin(true)
-            }}
-          >
-            Iniciar Sesión
-          </button>
-          <Login show={showLogin} setShow={setShowLogin} />
+          {user ? (
+            <>
+              <h1 className="text-2xl font-bold">{user.name}</h1>
+              <button className="button-primary" onClick={signout}>
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="button-primary"
+                onClick={() => {
+                  setShowLogin(true)
+                }}
+              >
+                Iniciar Sesión
+              </button>
+            </>
+          )}
           <button
             className="text-2xl relative"
             onClick={() => {
@@ -66,6 +92,7 @@ export const Navbar = () => {
           <CartBox show={showCart} setShow={setShowCart} />
         </section>
       </div>
+      <Login show={showLogin} setShow={setShowLogin} />
     </nav>
   )
 }

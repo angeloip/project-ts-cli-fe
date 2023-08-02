@@ -6,7 +6,7 @@ export interface Auth {
 export interface User extends Auth {
   _id?: string
   name: string
-  avatar: Avatar
+  avatar?: Avatar
   createdAt?: Date
 }
 
@@ -22,7 +22,7 @@ export interface AuthState {
 }
 
 export type AuthAction =
-  | { type: 'SIGNIN', payload: boolean }
+  | { type: 'LOGIN' }
   | { type: 'GET_TOKEN', payload: string }
   | { type: 'GET_USER', payload: User }
   | { type: 'UPDATE_AVATAR', payload: Avatar }

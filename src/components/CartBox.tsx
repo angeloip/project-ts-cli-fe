@@ -29,7 +29,7 @@ export const CartBox: React.FC<Props> = ({ show, setShow }) => {
             <FaXmark />
           </button>
         </header>
-        <main className="flex-1 py-3">
+        <main className="flex-1 py-3 overflow-y-auto">
           <section className="flex flex-col gap-3">
             {cart.map((product) => (
               <article key={product.id} className="flex items-center gap-4">
@@ -61,7 +61,7 @@ export const CartBox: React.FC<Props> = ({ show, setShow }) => {
             <p className="font-bold">Total</p>
             <p className="font-bold">$ {total}</p>
           </div>
-          <button className="button-primary w-full">Mi carrito</button>
+          <button className="button-primary w-full">Continuar compra</button>
         </footer>
       </div>
     </Offcanvas>

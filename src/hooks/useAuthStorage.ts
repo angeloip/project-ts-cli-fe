@@ -8,10 +8,10 @@ import { useReducer } from 'react'
 
 const reducer = (state: AuthState, action: AuthAction) => {
   const { type } = action
-  if (type === 'SIGNIN') {
+  if (type === 'LOGIN') {
     return {
       ...state,
-      isLoggedIn: action.payload
+      isLoggedIn: true
     }
   }
   if (type === 'GET_TOKEN') {
@@ -61,8 +61,9 @@ export const useAuthStorage = () => {
     token: ''
   }
 
-  const signin = (payload: boolean) => {
-    dispatch({ type: 'SIGNIN', payload })
+  const login = () => {
+    localStorage.setItem('_signing', 'true')
+    dispatch({ type: 'LOGIN' })
   }
 
   const getToken = (payload: string) => {
@@ -78,6 +79,7 @@ export const useAuthStorage = () => {
   }
 
   const logout = () => {
+    localStorage.removeItem('_signing')
     dispatch({ type: 'LOGOUT' })
   }
 
@@ -90,7 +92,7 @@ export const useAuthStorage = () => {
     user,
     isLoggedIn,
     token,
-    signin,
+    login,
     getToken,
     getUser,
     updateAvatar,

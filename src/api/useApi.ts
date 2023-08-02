@@ -7,7 +7,7 @@ export const useApi = () => {
   const registerRequest = async (user: User) =>
     await axios.post('/auth/register', user)
 
-  const loginRequest = async (user: User) =>
+  const loginRequest = async (user: Omit<User, 'name'>) =>
     await axios.post('/auth/login', user)
 
   const accessTokenRequest = async () => await axios.post('/auth/access')
@@ -35,6 +35,9 @@ export const useApi = () => {
       `/product/category?name=${category}&key=${key}&order=${order}&min=${min}&max=${max}`
     )
 
+  const getProductRequest = async (id: string) =>
+    await axios.get(`/product/${id}`)
+
   return {
     registerRequest,
     loginRequest,
@@ -42,6 +45,7 @@ export const useApi = () => {
     accessTokenRequest,
     logoutRequest,
     getCategoriesRequest,
-    getProductsByCategoryRequest
+    getProductsByCategoryRequest,
+    getProductRequest
   }
 }

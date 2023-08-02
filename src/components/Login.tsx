@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { Toast } from '../helpers/toast'
 import { type User } from '../interfaces/User'
 import { useApi } from '../api/useApi'
+import { useAuth } from '../context/AuthContext'
+import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs'
 
 interface Props {
   show: boolean
@@ -13,7 +15,9 @@ interface Props {
 
 export const Login: React.FC<Props> = ({ show, setShow }) => {
   const [isRegister, setIsRegister] = useState(false)
-  const { registerRequest } = useApi()
+  const [showPassword, setShowPassword] = useState(false)
+  const { registerRequest, loginRequest } = useApi()
+  const { login } = useAuth()
   const [form, setForm] = useState<User>({
     name: '',
     email: '',
@@ -27,9 +31,25 @@ export const Login: React.FC<Props> = ({ show, setShow }) => {
     })
   }
 
-  const handleSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    Toast('success', 'Bienvenido')
+
+    const user = {
+      email: form.email,
+      password: form.password
+    }
+
+    await loginRequest(user)
+      .then((res) => {
+        login()
+        Toast('success', res.data.name)
+      })
+      .catch((err) => {
+        Toast('error', err.response.data.msg)
+      })
+      .finally(() => {
+        setShow(false)
+      })
   }
 
   const handleSubmitRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +58,7 @@ export const Login: React.FC<Props> = ({ show, setShow }) => {
     await registerRequest(form)
       .then((res) => {
         Toast('success', res.data.msg)
+        setShow(false)
       })
       .catch((err) => {
         Toast('error', err.response.data.msg)
@@ -85,10 +106,15 @@ export const Login: React.FC<Props> = ({ show, setShow }) => {
               onChange={handleChange}
             />
             <Input
+              type={showPassword ? 'text' : 'password'}
               text="Contraseña"
               name="password"
               value={form.password}
               onChange={handleChange}
+              icon={showPassword ? <BsEyeFill /> : <BsEyeSlashFill />}
+              onClick={() => {
+                setShowPassword(!showPassword)
+              }}
             />
             <button type="submit" className="button-primary">
               {isRegister ? 'Registrarse' : 'Iniciar Sesión'}

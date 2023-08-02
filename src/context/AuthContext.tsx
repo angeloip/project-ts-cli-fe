@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useApi } from '../api/useApi'
 import { useAuthStorage } from '../hooks/useAuthStorage'
 import { Toast } from '../helpers/toast'
@@ -6,14 +6,14 @@ import { type Avatar, type User } from '../interfaces/User'
 
 interface State {
   user: User | null
-  signin: (payload: boolean) => void
+  login: () => void
   updateAvatar: (payload: Avatar) => void
   logout: () => void
 }
 
 const AuthContext = createContext<State>({
   user: null,
-  signin: () => {},
+  login: () => {},
   updateAvatar: () => {},
   logout: () => {}
 })
@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     user,
     isLoggedIn,
     token,
-    signin,
+    login,
     getToken,
     getUser,
     updateAvatar,
@@ -47,7 +47,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         getToken(res.data.ac_token)
       })
       .catch((err) => {
-        localStorage.removeItem('_signing')
         logout()
         Toast('info', err.response.data.msg)
       })
@@ -59,13 +58,26 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         getUser(res.data)
       })
       .catch((err) => {
-        Toast('error', err.response.data)
+        Toast('error', err.response.data.msg)
       })
   }
 
+  useEffect(() => {
+    const _appSigning = localStorage.getItem('_signing')
+    if (_appSigning) {
+      void accessToken()
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    if (token) {
+      void getUserAuth()
+    }
+  }, [token])
+
   const value = {
     user,
-    signin,
+    login,
     updateAvatar,
     logout
   }
