@@ -6,6 +6,7 @@ import { type Avatar, type User } from '../interfaces/User'
 
 interface State {
   user: User | null
+  token: string | null
   login: () => void
   updateAvatar: (payload: Avatar) => void
   logout: () => void
@@ -13,6 +14,7 @@ interface State {
 
 const AuthContext = createContext<State>({
   user: null,
+  token: null,
   login: () => {},
   updateAvatar: () => {},
   logout: () => {}
@@ -77,6 +79,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const value = {
     user,
+    token,
     login,
     updateAvatar,
     logout

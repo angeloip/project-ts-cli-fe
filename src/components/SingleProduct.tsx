@@ -17,16 +17,19 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
       _id,
       name,
       price,
-      category: { name: categoryName },
-      description,
+      discountPercentage,
+      category,
       thumbnail: { url }
     } = product
     const productToAdd = {
       id: _id,
       name,
       price,
-      category: categoryName,
-      description,
+      discountPercentage,
+      category: {
+        id: category._id,
+        name: category.name
+      },
       image: url
     }
     addToCart(productToAdd)

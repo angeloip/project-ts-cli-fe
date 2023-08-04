@@ -2,6 +2,8 @@ import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { Toast } from '../helpers/toast'
+import { useApi } from '../api/useApi'
+import { type Order } from '../interfaces/Order'
 
 export const Cart = () => {
   const {
@@ -10,13 +12,37 @@ export const Cart = () => {
     total,
     decreaseQuantity,
     increaseQuantity,
-    removeFromCart
+    removeFromCart,
+    clearCart
   } = useCart()
-  const { user } = useAuth()
+  const { user, token } = useAuth()
+  const { createOrderRequest } = useApi()
 
-  const checkout = () => {
+  const checkout = async () => {
+    if (quantity === 0) return Toast('info', 'No hay productos en el carrito')
+
     if (user) {
-      console.log('checkout')
+      const order: Order = {
+        products: cart.map((product) => ({
+          name: product.name,
+          price: product.price,
+          quantity: product.quantity,
+          discountPercentage: product.discountPercentage,
+          subtotal: product.price * product.quantity,
+          category: product.category.id
+        })),
+        total,
+        quantity,
+        user: user._id as string
+      }
+      await createOrderRequest(order, token as string)
+        .then((res) => {
+          Toast('success', res.data.msg)
+          clearCart()
+        })
+        .catch((err) => {
+          Toast('error', err.response.data.msg)
+        })
     } else {
       Toast('info', 'Debes iniciar sesión para continuar')
     }
@@ -25,6 +51,7 @@ export const Cart = () => {
   return (
     <section className="component-box">
       <div className="grid gap-4">
+        d
         <h1 className="py-3 px-5 bg-white rounded-lg font-medium text-xl">
           Mi Carrito ({quantity} productos)
         </h1>
@@ -45,7 +72,9 @@ export const Cart = () => {
                     <h3 className="font-medium leading-tight h-10 line-clamp-2">
                       {product.name}
                     </h3>
-                    <p className="text-sm text-gray-500">{product.category}</p>
+                    <p className="text-sm text-gray-500">
+                      {product.category.name}
+                    </p>
                   </div>
                   <div className="flex-1 flex items-center gap-4">
                     <div className="flex-2 flex items-center gap-4 500:flex-col">

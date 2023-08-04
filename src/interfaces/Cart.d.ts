@@ -9,9 +9,14 @@ export interface Cart {
   name: string
   price: number
   quantity: number
-  category: string
-  description: string
+  discountPercentage: number
+  category: Category
   image: string
+}
+
+interface Category {
+  id: string
+  name: string
 }
 
 type CartID = string | number

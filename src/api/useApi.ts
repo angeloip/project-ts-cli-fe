@@ -1,5 +1,6 @@
 import axios from '../config/axios'
 import { type CategoryResponse } from '../interfaces/Category'
+import { type Order } from '../interfaces/Order'
 import { type ProductResponse } from '../interfaces/Product'
 import { type User } from '../interfaces/User'
 
@@ -38,6 +39,12 @@ export const useApi = () => {
   const getProductRequest = async (id: string) =>
     await axios.get(`/product/${id}`)
 
+  const createOrderRequest = async (order: Order, token: string) => await axios.post('/order', order, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+
   return {
     registerRequest,
     loginRequest,
@@ -46,6 +53,7 @@ export const useApi = () => {
     logoutRequest,
     getCategoriesRequest,
     getProductsByCategoryRequest,
-    getProductRequest
+    getProductRequest,
+    createOrderRequest
   }
 }
