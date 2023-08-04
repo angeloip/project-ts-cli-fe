@@ -4,7 +4,7 @@ import {
   type CartAction,
   type CartID,
   type CartState
-} from '../types'
+} from '../interfaces/Cart'
 
 const reducer = (state: CartState, action: CartAction) => {
   const { type } = action

@@ -68,7 +68,7 @@ export const Category = () => {
               />
             </section>
           </section>
-          <section className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2.5">
+          <section className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2.5">
             {products.map((product) => (
               <SingleProduct key={product._id} product={product} />
             ))}

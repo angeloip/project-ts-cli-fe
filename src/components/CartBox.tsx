@@ -2,6 +2,7 @@ import { Offcanvas } from './Offcanvas'
 import { useCart } from '../context/CartContext'
 import { FaXmark } from 'react-icons/fa6'
 import { FaTrash } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 interface Props {
   show: boolean
@@ -41,7 +42,7 @@ export const CartBox: React.FC<Props> = ({ show, setShow }) => {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold">{product.name}</h3>
                   <p className="text-sm text-gray-500">
-                    ${product.price} x {product.quantity}
+                    S/ {product.price} x {product.quantity}
                   </p>
                 </div>
                 <button
@@ -59,9 +60,17 @@ export const CartBox: React.FC<Props> = ({ show, setShow }) => {
         <footer className="flex flex-col gap-3 border-t-gray-300 pt-3 border-t">
           <div className="flex items-center justify-between text-xl">
             <p className="font-bold">Total</p>
-            <p className="font-bold">$ {total}</p>
+            <p className="font-bold">S/ {total}</p>
           </div>
-          <button className="button-primary w-full">Continuar compra</button>
+          <Link
+            className="button-primary text-center"
+            to="/mi-carrito"
+            onClick={() => {
+              setShow(false)
+            }}
+          >
+            Continuar compra
+          </Link>
         </footer>
       </div>
     </Offcanvas>

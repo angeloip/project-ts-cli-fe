@@ -54,7 +54,7 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
             {product.rating}
           </span>
         </div>
-        <p className="text-xl font-bold text-gray-900">${product.price}</p>
+        <p className="text-xl font-bold text-gray-900">S/ {product.price}</p>
         {productExists ? (
           <div className="flex items-center justify-center gap-3 h-10">
             <button

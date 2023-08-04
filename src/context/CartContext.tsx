@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { useCartStorage } from '../hooks/useCartStorage'
-import { type Cart, type CartID } from '../types'
+import { type Cart, type CartID } from '../interfaces/Cart'
 
 interface State {
   cart: Cart[]

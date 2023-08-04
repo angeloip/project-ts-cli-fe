@@ -34,5 +34,5 @@ export const ProductDetails = () => {
     void getProduct()
   }, [])
 
-  return <div className="component-box">{product.name}</div>
+  return <section className="component-box">{product.name}</section>
 }
