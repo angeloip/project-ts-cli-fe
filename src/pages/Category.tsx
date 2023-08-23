@@ -5,9 +5,11 @@ import { useApi } from '../api/useApi.ts'
 import { type ProductResponse } from '../interfaces/Product'
 import { Select } from '../components/Select.tsx'
 import { orderOptions } from '../constants/constants.tsx'
+import { SingleProductSkeleton } from '../loading/SingleProductSkeleton.tsx'
 
 export const Category = () => {
   const [products, setProducts] = useState<ProductResponse[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedOrder, setSelectedOrder] = useState({
     value: '',
@@ -18,6 +20,7 @@ export const Category = () => {
   const { getProductsByCategoryRequest } = useApi()
 
   const getProductsByCategory = async () => {
+    setIsLoading(true)
     await getProductsByCategoryRequest(
       selectedCategory,
       selectedOrder.key,
@@ -27,6 +30,7 @@ export const Category = () => {
     )
       .then((res) => {
         setProducts(res.data)
+        setIsLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -69,9 +73,13 @@ export const Category = () => {
             </section>
           </section>
           <section className="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2.5">
-            {products.map((product) => (
-              <SingleProduct key={product._id} product={product} />
-            ))}
+            {isLoading
+              ? [...Array(10)].map((_, index) => (
+                  <SingleProductSkeleton key={index} />
+                ))
+              : products.map((product) => (
+                  <SingleProduct key={product._id} product={product} />
+                ))}
           </section>
         </div>
       </div>

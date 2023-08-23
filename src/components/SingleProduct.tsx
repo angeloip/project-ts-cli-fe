@@ -36,11 +36,11 @@ export const SingleProduct: React.FC<Props> = ({ product }) => {
   }
 
   return (
-    <div className="w-full bg-white rounded-lg shadow">
+    <div className="bg-white rounded-lg shadow">
       <Link to={`/detalles/${slugify(product.name)}/${product._id}`}>
         <figure className="p-5 h-[200px]">
           <img
-            className="object-cover w-full h-full mx-auto shadow-lg"
+            className="object-cover w-full h-full mx-auto shadow-lg rounded"
             src={product.thumbnail.url}
             alt={product.name}
           />

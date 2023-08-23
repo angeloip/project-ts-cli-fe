@@ -43,12 +43,10 @@ export const Login: React.FC<Props> = ({ show, setShow }) => {
       .then((res) => {
         login()
         Toast('success', res.data.name)
+        setShow(false)
       })
       .catch((err) => {
         Toast('error', err.response.data.msg)
-      })
-      .finally(() => {
-        setShow(false)
       })
   }
 

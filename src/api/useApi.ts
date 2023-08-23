@@ -32,18 +32,19 @@ export const useApi = () => {
     min: string,
     max: string
   ) =>
-    await axios.post<ProductResponse[]>(
-      `/product/category?name=${category}&key=${key}&order=${order}&min=${min}&max=${max}`
+    await axios.get<ProductResponse[]>(
+      `/product/category/filter?name=${category}&key=${key}&order=${order}&min=${min}&max=${max}`
     )
 
   const getProductRequest = async (id: string) =>
     await axios.get(`/product/${id}`)
 
-  const createOrderRequest = async (order: Order, token: string) => await axios.post('/order', order, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
+  const createOrderRequest = async (order: Order, token: string) =>
+    await axios.post('/order', order, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
 
   return {
     registerRequest,
